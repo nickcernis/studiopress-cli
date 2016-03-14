@@ -240,6 +240,8 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
 			$this->studiopress_download_theme( $theme_name );
 
+			unlink( $this->cookie_path );
+
 			WP_CLI::log( "Installing theme..." );
 
 			$install_args = array( 'theme', 'install', $this->upload_path . "/$theme_name.zip" );
