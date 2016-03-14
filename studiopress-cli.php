@@ -160,11 +160,18 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		public $upload_path;
 
 		/**
+		 * Path to cookie including filename
+		 * @var string
+		 */
+		public $cookie_path;
+
+		/**
 		 * StudioPress_Theme_CLI constructor.
 		 */
 		public function __construct() {
 			$upload_dir        = wp_upload_dir();
 			$this->upload_path = $upload_dir['path'] . '/';
+			$this->cookie_path = $upload_dir['path'] . '/sp-cookie-' . $this->random_string(6) . '.txt';
 		}
 
 		/**
@@ -233,7 +240,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
 			$this->studiopress_download_theme( $theme_name );
 
-			unlink( $this->upload_path . "sp-cookie.txt" );
+			unlink( $this->cookie_path );
 
 			WP_CLI::log( "Installing theme..." );
 
@@ -258,7 +265,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			$ch = curl_init();
 			curl_setopt( $ch, CURLOPT_URL, 'https://my.studiopress.com/wp-login.php' );
 			curl_setopt( $ch, CURLOPT_NOBODY, true );
-			curl_setopt( $ch, CURLOPT_COOKIEJAR, $this->upload_path . 'sp-cookie.txt' );
+			curl_setopt( $ch, CURLOPT_COOKIEJAR, $this->cookie_path );
 			curl_setopt( $ch, CURLOPT_POSTFIELDS, $auth_data );
 			curl_setopt( $ch, CURLOPT_TIMEOUT, 20 );
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -266,7 +273,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			curl_close( $ch );
 
 			// Check that login was successful
-			$cookie_contents = file_get_contents( $this->upload_path . 'sp-cookie.txt' );
+			$cookie_contents = file_get_contents( $this->cookie_path );
 			if ( strpos( $cookie_contents, 'wordpress_logged_in' ) ) {
 				return true;
 			} else {
@@ -289,7 +296,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			$ch   = curl_init();
 			$file = fopen( $this->upload_path . "/$theme_name.zip", 'w+' );
 			curl_setopt( $ch, CURLOPT_URL, $download_url );
-			curl_setopt( $ch, CURLOPT_COOKIEFILE, $this->upload_path . 'sp-cookie.txt' );
+			curl_setopt( $ch, CURLOPT_COOKIEFILE, $this->cookie_path );
 			curl_setopt( $ch, CURLOPT_FILE, $file );
 			curl_setopt( $ch, CURLOPT_TIMEOUT, 20 );
 			$output = curl_exec( $ch );
@@ -298,6 +305,31 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			// TODO: only return true if theme zip file is not empty
 			return true;
 
+		}
+
+		/**
+		 * Generate a random string, using a cryptographically secure
+		 * pseudorandom number generator (random_int)
+		 *
+		 * Taken from http://stackoverflow.com/a/31107425
+		 *
+		 * For PHP 7, random_int is a PHP core function
+		 * For PHP 5.x, depends on https://github.com/paragonie/random_compat
+		 *
+		 * @param int $length How many characters do we want?
+		 * @param string $keyspace A string of all possible characters
+		 *                         to select from
+		 *
+		 * @return string
+		 */
+		private function random_string( $length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' ) {
+			$str = '';
+			$max = mb_strlen( $keyspace, '8bit' ) - 1;
+			for ( $i = 0; $i < $length; ++ $i ) {
+				$str .= $keyspace[ random_int( 0, $max ) ];
+			}
+
+			return $str;
 		}
 
 	}
