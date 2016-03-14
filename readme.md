@@ -6,7 +6,9 @@ Requires an active StudioPress account.
 
 ## Installation
 
-Install the plugin by downloading the zip file or via WP CLI.
+Install the plugin by downloading the [zip file](https://github.com/nickcernis/studiopress-cli/archive/0.1.0.zip) or via WP CLI:
+
+`wp plugin install https://github.com/nickcernis/studiopress-cli/archive/0.1.0.zip --activate`
 
 ## Commands
 
