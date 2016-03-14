@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: StudioPress CLI
  * Description: Install StudioPress themes with WP CLI. Requires an active My StudioPress account.
- * Version:     0.1.1
+ * Version:     0.1.2
  * Author:      Nick Cernis
  * Author URI:  https://modernnerd.net
  * Text Domain: studiopress-cli
