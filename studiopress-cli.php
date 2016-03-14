@@ -171,7 +171,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		public function __construct() {
 			$upload_dir        = wp_upload_dir();
 			$this->upload_path = $upload_dir['path'] . '/';
-			$this->cookie_path = $upload_dir['path'] . '/sp-cookie-' . $this->random_string(6) . '.txt';
+			$this->cookie_path = $upload_dir['path'] . '/sp-cookie-' . wp_generate_password( 10, false ) . '.txt';
 		}
 
 		/**
@@ -240,8 +240,6 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
 			$this->studiopress_download_theme( $theme_name );
 
-			unlink( $this->cookie_path );
-
 			WP_CLI::log( "Installing theme..." );
 
 			$install_args = array( 'theme', 'install', $this->upload_path . "/$theme_name.zip" );
@@ -305,31 +303,6 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			// TODO: only return true if theme zip file is not empty
 			return true;
 
-		}
-
-		/**
-		 * Generate a random string, using a cryptographically secure
-		 * pseudorandom number generator (random_int)
-		 *
-		 * Taken from http://stackoverflow.com/a/31107425
-		 *
-		 * For PHP 7, random_int is a PHP core function
-		 * For PHP 5.x, depends on https://github.com/paragonie/random_compat
-		 *
-		 * @param int $length How many characters do we want?
-		 * @param string $keyspace A string of all possible characters
-		 *                         to select from
-		 *
-		 * @return string
-		 */
-		private function random_string( $length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' ) {
-			$str = '';
-			$max = mb_strlen( $keyspace, '8bit' ) - 1;
-			for ( $i = 0; $i < $length; ++ $i ) {
-				$str .= $keyspace[ random_int( 0, $max ) ];
-			}
-
-			return $str;
 		}
 
 	}
