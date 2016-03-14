@@ -1,14 +1,14 @@
 # StudioPress CLI
 
-Download StudioPress themes with WP CLI.
+Install StudioPress themes with WP CLI.
 
 Requires an active StudioPress account.
 
 ## Installation
 
-Install the plugin by downloading the [zip file](https://github.com/nickcernis/studiopress-cli/archive/0.1.0.zip) or via WP CLI:
+Install the plugin by downloading the [zip file](https://github.com/nickcernis/studiopress-cli/archive/0.1.1.zip) or via WP CLI:
 
-`wp plugin install https://github.com/nickcernis/studiopress-cli/archive/0.1.0.zip --activate`
+`wp plugin install https://github.com/nickcernis/studiopress-cli/archive/0.1.1.zip --force --activate`
 
 ## Commands
 
@@ -30,5 +30,5 @@ Install and activate Genesis Sample:
 
 ## Notes
 
-- This project is not endorsed or supported by StudioPress. Please report issues via this GitHub repo.
+- This project is not endorsed or supported by StudioPress. Please [report issues](https://github.com/nickcernis/studiopress-cli/issues/new) via this GitHub repo.
 - Currently requires PHP with the CURL module.
