@@ -22,7 +22,7 @@ Install the plugin by downloading the [zip file](https://github.com/nickcernis/s
 
 Install Genesis using your StudioPress username and password:
 
-    `wp sp-theme install genesis --spuser=test@example.com --sppass=password`
+`wp sp-theme install genesis --spuser=test@example.com --sppass=password`
 
 Install and activate Genesis Sample:
 
