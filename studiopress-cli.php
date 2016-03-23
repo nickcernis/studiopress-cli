@@ -91,6 +91,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			'innov8tive'           => '8033ff70d355d5e52b64f38c0da630a4',
 			'inspired'             => '2a91bd7fa9f4fbae3e669b052ff929f4',
 			'inspyr'               => '2f7efa2896d4d00387a62397abcad4d1',
+			'interior-pro'         => '675830192560d07c2d91a21a6098a327',
 			'jane'                 => '433a490987ed5c6ab0bf33d540ffd4bd',
 			'jessica'              => '9fdda7b5b54e96644a5acfd9b3050782',
 			'kickstart-pro'        => '670bb7caf49beb3ab8f6972b09a3b403',
